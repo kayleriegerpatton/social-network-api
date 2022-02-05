@@ -19,13 +19,33 @@ const userSchema = {
       "Not a valid email address.",
     ],
   },
-  thoughts: [thoughts],
+  //   array of thought model types by _id
+  thoughts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "thought",
+    },
+  ],
+  //   array of user model types by _id
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
+  ],
 };
 
-// *ADD VIRTUAL TO TOTAL 'FRIENDCOUNT' (LENGTH OF FRIENDS ARRAY)
-
 // create new instance of Schema
-const schema = new Schema(userSchema);
+const schema = new Schema(userSchema, {
+  toJSON: {
+    getters: true,
+  },
+});
+
+// virtual to total friends count
+schema.virtual("friendCount").get(function () {
+  return this.friends.length;
+});
 
 // create new model
 const User = model("user", schema);
