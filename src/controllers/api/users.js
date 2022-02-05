@@ -2,6 +2,7 @@ const getUsers = (req, res) => {
   return res.send("getUsers");
 };
 const getUserById = (req, res) => {
+  // populate with thoughts and friends
   return res.send("getUserById");
 };
 const createUser = (req, res) => {
