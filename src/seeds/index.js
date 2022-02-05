@@ -1,3 +1,6 @@
+const mongoose = require("mongoose");
+
+const { User, Thought } = require("../models");
 // Step 1 seed all users
 
 // Step 2 seed all thoughts
