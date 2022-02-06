@@ -39,6 +39,16 @@ const thoughts = [
     thoughtText: "Wakanda will no longer watch from the shadows.",
     username: "tchallaKing",
   },
+  {
+    thoughtText: "I'm always picking up after you boys.",
+    username: "natashaRomanoff",
+    reactions: [
+      {
+        reactionBody: "Thanks, Natasha. We couldn't manage without you.",
+        username: "steveRogers",
+      },
+    ],
+  },
 ];
 
 module.exports = thoughts;
