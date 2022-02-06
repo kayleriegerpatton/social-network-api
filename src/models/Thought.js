@@ -13,7 +13,9 @@ const thoughtSchema = {
   createdAt: {
     type: Date,
     // FORMAT: Saturday February 5th, 2022 @ 11:29:26 p.m.
-    default: format(new Date(), "EEEE MMMM do, yyyy @ hh:mm:ss aaaa"),
+    // * This is failing because it returns a string, not a number
+    // default: format(new Date(), "EEEE MMMM do, yyyy @ hh:mm:ss aaaa"),
+    default: new Date(),
   },
   username: {
     type: String,
