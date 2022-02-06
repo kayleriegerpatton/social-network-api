@@ -21,37 +21,36 @@ const seed = async () => {
     await User.deleteMany({});
     await Thought.deleteMany({});
 
-    // Step 1 seed all users
+    // seed all users
     await User.insertMany(users);
     console.log("[INFO]: Successfully seeded users.");
 
-    // Step 2 seed all thoughts
+    // seed all thoughts
     await Thought.insertMany(thoughts);
     console.log("[INFO]: Successfully seeded thoughts.");
 
-    // Step 3 get all thoughts from DB
+    // get all thoughts and users from DB for linking
     const thoughtsFromDB = await Thought.find({});
     const usersFromDB = await User.find({});
 
     // * CURRENTLY ONLY SEEDS USERS WHO HAVE THOUGHTS
     const thoughtUsers = thoughtsFromDB.map((thought) => {
-      // get thought's user and id
+      // get thought's username and _id
       const thoughtUsername = thought.username;
       const thoughtId = thought._id.toString();
-      //   console.log(thoughtId);
 
       //   find user object matching thought's username
       const thoughtUsers = usersFromDB.find(
         (user) => user.username === thoughtUsername
       );
 
-      //   insert thought id into user's thoughts array
+      //   insert thought _id into user's thoughts array
       thoughtUsers.thoughts.push(thoughtId);
 
       return thoughtUsers;
     });
 
-    // console.log("Users:", thoughtUsers);
+    // delete previous user documents, replace with transformed data
     await User.deleteMany({});
     await User.insertMany(thoughtUsers);
 
