@@ -7,7 +7,7 @@ const {
 
 const router = Router();
 
-router.post("/:reactionId", createReaction);
+router.post("/", createReaction);
 router.delete("/:reactionId", deleteReaction);
 
 module.exports = router;

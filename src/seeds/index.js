@@ -25,34 +25,63 @@ const seed = async () => {
     await User.insertMany(users);
     console.log("[INFO]: Successfully seeded users.");
 
+    // const testThought = new Thought({
+    //   thoughtText: "I'm just a friendly neighborhood Spider-Man.",
+    //   username: "peterParker",
+    //   reactions: [
+    //     {
+    //       reactionBody: "Please! You've been to space!",
+    //       username: "natashaRomanoff",
+    //     },
+    //     {
+    //       reactionBody: "That was an accident!",
+    //       username: "peterParker",
+    //     },
+    //     {
+    //       reactionBody: "You're the next Iron Man.",
+    //       username: "steveRogers",
+    //     },
+    //   ],
+    // });
+    // console.log(testThought);
+
     // seed all thoughts
     await Thought.insertMany(thoughts);
     console.log("[INFO]: Successfully seeded thoughts.");
 
     // get all thoughts and users from DB for linking
     const thoughtsFromDB = await Thought.find({});
+    console.log("Thoughts from DB:", thoughtsFromDB);
     const usersFromDB = await User.find({});
 
-    // * CURRENTLY ONLY SEEDS USERS WHO HAVE THOUGHTS
     const thoughtUsers = thoughtsFromDB.map((thought) => {
       // get thought's username and _id
       const thoughtUsername = thought.username;
-      const thoughtId = thought._id.toString();
+      const thoughtId = thought._id;
 
       //   find user object matching thought's username
-      const thoughtUsers = usersFromDB.find(
+      const thoughtUser = usersFromDB.find(
         (user) => user.username === thoughtUsername
       );
 
       //   insert thought _id into user's thoughts array
-      thoughtUsers.thoughts.push(thoughtId);
+      thoughtUser.thoughts.push(thoughtId);
 
-      return thoughtUsers;
+      return thoughtUser;
     });
+
+    // add users without thoughts + with thoughts
+    const allUsers = [
+      ...thoughtUsers,
+      {
+        username: "natashaRomanoff",
+        email: "blackwidow@email.com",
+      },
+    ];
 
     // delete previous user documents, replace with transformed data
     await User.deleteMany({});
-    await User.insertMany(thoughtUsers);
+    await User.insertMany(allUsers);
 
     await mongoose.disconnect();
   } catch (error) {

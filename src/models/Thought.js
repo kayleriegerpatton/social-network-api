@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { format } = require("date-fns");
+const formatDate = require("../utils/formatDate");
 
 // import reaction schema
 const reactions = require("./Reaction");
@@ -10,16 +10,14 @@ const thoughtSchema = {
     required: true,
     maxLength: 280,
   },
-  createdAt: {
-    type: Date,
-    // FORMAT: Saturday February 5th, 2022 @ 11:29:26 p.m.
-    // * This is failing because it returns a string, not a number
-    // default: format(new Date(), "EEEE MMMM do, yyyy @ hh:mm:ss aaaa"),
-    default: new Date(),
-  },
   username: {
     type: String,
     required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    get: formatDate,
   },
   //   reactions is subdocument schema
   reactions: [reactions],

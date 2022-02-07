@@ -1,5 +1,5 @@
 const { Schema } = require("mongoose");
-const { format } = require("date-fns");
+const formatDate = require("../utils/formatDate");
 
 const reactionSchema = {
   reactionId: {
@@ -18,13 +18,15 @@ const reactionSchema = {
   },
   createdAt: {
     type: Date,
-    // FORMAT: Saturday February 5th, 2022 @ 11:29:26 p.m.
-    // * This is failing because it returns a string, not a number
-    // default: format(new Date(), "EEEE MMMM do, yyyy @ hh:mm:ss aaaa"),
-    default: new Date(),
+    default: Date.now,
+    get: formatDate,
   },
 };
 
-const schema = new Schema(reactionSchema);
+const schema = new Schema(reactionSchema, {
+  toJSON: {
+    getters: true,
+  },
+});
 
 module.exports = schema;
