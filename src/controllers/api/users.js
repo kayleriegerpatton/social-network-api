@@ -30,14 +30,27 @@ const getUserById = async (req, res) => {
       .json({ success: false, error: "Failed to get user." });
   }
 };
+
 const createUser = async (req, res) => {
   return res.send("createUser");
 };
+
 const updateUser = async (req, res) => {
   return res.send("updateUser");
 };
+
 const deleteUser = async (req, res) => {
-  return res.send("deleteUser");
+  try {
+    const userId = req.params.id;
+
+    const user = await User.findByIdAndDelete(userId);
+    return res.json({ success: true, data: user });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to delete user | ${error.message}`);
+    return res
+      .status(500)
+      .json({ success: false, error: "Failed to delete user." });
+  }
 };
 
 module.exports = { getUsers, getUserById, createUser, updateUser, deleteUser };
