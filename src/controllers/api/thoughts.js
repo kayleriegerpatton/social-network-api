@@ -1,21 +1,42 @@
-const { Thought } = require("../../models");
+const { Thought, User } = require("../../models");
 
 const getThoughts = async (req, res) => {
-  const thoughts = await Thought.find({});
-  console.log(thoughts);
-  return res.json(thoughts);
-  // return res.send("getThoughts");
+  try {
+    const thoughts = await Thought.find({});
+    return res.json({ success: true, data: thoughts });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to get thoughts | ${error.message}`);
+    return res
+      .status(500)
+      .json({ success: false, error: "Failed to get thoughts." });
+  }
 };
-const getThoughtById = (req, res) => {
-  return res.send("getThoughtById");
+const getThoughtById = async (req, res) => {
+  try {
+    // get thought id from params
+    const thoughtId = req.params.id;
+
+    const thought = await Thought.findById(thoughtId);
+
+    return res.json({ success: true, data: thought });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to get thought. | ${error.message}`);
+    return res
+      .status(500)
+      .json({ success: false, error: "Failed to get thought." });
+  }
 };
-const createThought = (req, res) => {
+
+const createThought = async (req, res) => {
+  // remember to push new thought's _id to the user's thoughts array
   return res.send("createThought");
 };
-const updateThought = (req, res) => {
+
+const updateThought = async (req, res) => {
   return res.send("updateThought");
 };
-const deleteThought = (req, res) => {
+
+const deleteThought = async (req, res) => {
   return res.send("deleteThought");
 };
 
