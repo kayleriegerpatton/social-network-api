@@ -40,6 +40,8 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
+  //* BONUS: Delete user's associated thoughts on delete
+
   try {
     const userId = req.params.id;
 

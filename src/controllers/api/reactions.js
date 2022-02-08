@@ -1,3 +1,5 @@
+// * remember to destructure both ids from params {thoughtId, reactionId}
+
 const createReaction = (req, res) => {
   return res.send("createReaction");
 };
