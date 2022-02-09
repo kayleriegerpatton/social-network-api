@@ -29,20 +29,36 @@ const getThoughtById = async (req, res) => {
 };
 
 const createThought = async (req, res) => {
-  //* remember to push new thought's _id to the user's thoughts array
+  try {
+    const { thoughtText, username, userId } = req.body;
 
-  // post body should look like this:
-  //   {
-  //     "thoughtText": "I miss Tony.",
-  //     "username": "peterParker",
-  //     "userId": "620177411dabfeba4dfc5d3c"
-  // }
+    if (thoughtText && username && userId) {
+      // create new thought
+      const newThought = await Thought.create({
+        thoughtText,
+        username,
+        userId,
+      });
+      // update user's thoughts array with new thought id
+      const user = await User.findByIdAndUpdate(
+        { _id: userId },
+        { $push: { thoughts: newThought._id } }
+      );
 
-  // get post body
-  // create new thought
-  // get new thought id
-  // push thought id to user's thought array
-  return res.send("createThought");
+      return res.json({ success: true, data: newThought });
+    }
+
+    // req.body missing entries (bad request)
+    return res.status(400).json({
+      success: false,
+      error: "Please provide the thought text, username, and user id.",
+    });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to create thought | ${error.message}`);
+    return res
+      .status(500)
+      .json({ success: false, error: "Failed to create thought." });
+  }
 };
 
 const updateThought = async (req, res) => {
