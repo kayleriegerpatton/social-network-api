@@ -11,6 +11,7 @@ const getThoughts = async (req, res) => {
       .json({ success: false, error: "Failed to get thoughts." });
   }
 };
+
 const getThoughtById = async (req, res) => {
   try {
     // get thought id from params
@@ -45,7 +46,33 @@ const createThought = async (req, res) => {
 };
 
 const updateThought = async (req, res) => {
-  return res.send("updateThought");
+  try {
+    const thoughtId = req.params.id;
+    const { thoughtText } = req.body;
+
+    if (thoughtText) {
+      const updatedThought = await Thought.findByIdAndUpdate(
+        thoughtId,
+        {
+          $set: {
+            thoughtText,
+          },
+        },
+        { returnDocument: "after" }
+      );
+
+      return res.json({ success: true, data: updatedThought });
+    }
+    return res.status(400).json({
+      success: false,
+      error: "Please provide the thought text.",
+    });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to update thought | ${error.message}`);
+    return res
+      .status(500)
+      .json({ success: false, error: "Failed to update thought." });
+  }
 };
 
 const deleteThought = async (req, res) => {
