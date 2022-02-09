@@ -40,6 +40,7 @@ const schema = new Schema(userSchema, {
   toJSON: {
     getters: true,
   },
+  id: false,
 });
 
 // virtual to total friends count

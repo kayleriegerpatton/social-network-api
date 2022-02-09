@@ -29,6 +29,18 @@ const getThoughtById = async (req, res) => {
 
 const createThought = async (req, res) => {
   //* remember to push new thought's _id to the user's thoughts array
+
+  // post body should look like this:
+  //   {
+  //     "thoughtText": "I miss Tony.",
+  //     "username": "peterParker",
+  //     "userId": "620177411dabfeba4dfc5d3c"
+  // }
+
+  // get post body
+  // create new thought
+  // get new thought id
+  // push thought id to user's thought array
   return res.send("createThought");
 };
 
