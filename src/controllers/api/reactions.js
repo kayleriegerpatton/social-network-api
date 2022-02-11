@@ -27,7 +27,7 @@ const createReaction = async (req, res) => {
     console.log(`[ERROR]: Failed to create reaction | ${error.message}`);
     return res
       .status(500)
-      .json({ success: false, error: "Failed to create raction." });
+      .json({ success: false, error: "Failed to create reaction." });
   }
 };
 
