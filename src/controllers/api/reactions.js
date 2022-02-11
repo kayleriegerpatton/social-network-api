@@ -32,11 +32,24 @@ const createReaction = async (req, res) => {
 };
 
 const deleteReaction = async (req, res) => {
-  // get post body & thought id from params
-  const { thoughtId, reactionId } = req.params;
+  try {
+    // get post body & thought id from params
+    const { thoughtId, reactionId } = req.params;
 
-  // const deletedReaction = await;
-  return res.send("deleteReaction");
+    const deletedReaction = await Thought.findByIdAndUpdate(
+      thoughtId,
+      {
+        $pull: { reactions: { reactionId } },
+      },
+      { returnDocument: "after" }
+    );
+    return res.json({ success: true, data: deletedReaction });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to delete reaction | ${error.message}`);
+    return res
+      .status(500)
+      .json({ success: false, error: "Failed to delete reaction." });
+  }
 };
 
 module.exports = { createReaction, deleteReaction };
