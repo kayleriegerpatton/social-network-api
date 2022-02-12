@@ -4,28 +4,56 @@
 
 - [Description](#description)
   - [Technologies](#technologies)
-- [Endpoints](#endpoints)
 - [Getting Started](#getting-started)
   - [Installation](#installation)
   - [Seeding](#seeding)
   - [Usage](#usage)
+- [Endpoints](#endpoints)
 - [Questions](#questions)
 - [License](#license)
-- [Screenshots](#screenshots)
+- [Demo Video](#demo-video)
 
 ## Description
 
 This back-end Node.js application uses an Express.js server and a MongoDB database through the Mongoose package.
 
-The database contains 2 collections, users and thoughts, and the api queries each with 7 endpoints including 4 which interact with 'reaction' and 'friends' subdocuments.
+The database contains 2 collections, users and thoughts, and the api queries each with 7 endpoints including 4 which interact with 'reaction' subdocuments and users' 'friends' lists.
 
 ### Technologies
 
-- Javascript
-- Node.js
 - Express.js server
+- Javascript
 - MongoDB database
 - Mongoose
+- Node.js
+
+## Getting Started
+
+### Installation
+
+Run the following script to install the application:
+
+```
+$ git clone https://github.com/kayleriegerpatton/social-network-api.git
+$ cd social-network-api
+$ npm install
+```
+
+### Seeding
+
+Before starting the application, create a new "socialNetworkDB" database in MongoDB. Seed data from the command line:
+
+```
+$ npm run seed
+```
+
+### Usage
+
+Run the following script to use the application:
+
+```
+$ npm run start
+```
 
 ## Endpoints
 
@@ -295,42 +323,12 @@ Sample response:
 
 To contribute to or ask questions about this project, please contact me via [email](mailto:kayle.patton22@gmail.com) or [GitHub](https://github.com/kayleriegerpatton).
 
-## Getting Started
-
-### Installation
-
-Run the following script to install the application:
-
-```
-$ git clone https://github.com/kayleriegerpatton/social-network-api.git
-$ cd social-network-api
-$ npm install
-```
-
-### Seeding
-
-Before starting the application, create a new "socialNetworkDB" database in MongoDB. Seed data from the command line:
-
-```
-$ npm run seed
-```
-
-### Usage
-
-Run the following script to use the application:
-
-```
-$ npm run start
-```
-
 ## License
 
 MIT License
 
-## GIF
-
-![Command line and Postman run-through animation]()
-
 ## Demo Video
 
-Click to [view a demo video]()
+Click to [view a demo video](https://drive.google.com/file/d/16tbA8YCKdwbnS8LLiEc7dsZfe3U64hpr/view?usp=sharing)
+
+![Command line and Postman run-through animation](assets/gifs/social-network-api-GIF.gif)
