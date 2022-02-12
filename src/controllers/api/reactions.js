@@ -33,7 +33,6 @@ const createReaction = async (req, res) => {
 
 const deleteReaction = async (req, res) => {
   try {
-    // get post body & thought id from params
     const { thoughtId, reactionId } = req.params;
 
     const deletedReaction = await Thought.findByIdAndUpdate(
