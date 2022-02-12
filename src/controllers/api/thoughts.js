@@ -40,7 +40,7 @@ const createThought = async (req, res) => {
         userId,
       });
       // update user's thoughts array with new thought id
-      const user = await User.findByIdAndUpdate(
+      await User.findByIdAndUpdate(
         { _id: userId },
         { $push: { thoughts: newThought._id } }
       );
